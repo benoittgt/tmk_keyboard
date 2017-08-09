@@ -3,7 +3,7 @@
 #include "hook.h"
 #include "fc660c.h"
 
-
+#define AC_L1       ACTION_LAYER_MOMENTARY(1)
 #define AC_L3       ACTION_LAYER_MOMENTARY(3)
 #define AC_L4       ACTION_LAYER_MOMENTARY(4)
 #define AC_LS_2     ACTION_LAYER_MODS(2, MOD_LSFT)
@@ -17,7 +17,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section ("
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
 #endif
     [0] = KMAP(
-        ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,     INS,
+        ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,     L1,
         TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS,     DEL,
         LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,
         LS_2,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RS_2,UP,
@@ -59,7 +59,9 @@ void hook_layer_change(uint32_t layer_state)
     // lights LED on Insert when layer 1 is enabled
     if (layer_state & (1L<<1)) {
         PORTB &= ~(1<<5);
+        PORTB &= ~(1<<6);
     } else {
         PORTB |=  (1<<5);
+        PORTB |=  (1<<6);
     }
 }
